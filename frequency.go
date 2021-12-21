@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
+	"time"
+
 	//"math/rand"
 	"os"
 	"sort"
@@ -41,9 +44,9 @@ func main() {
 	skews := []float64{0.5, 0.6, 0.7, 0.8, 0.9, 0.99, 1.1, 1.2, 1.3, 1.4, 1.5}
 
 	for _, s := range skews {
-		//random := rand.New(rand.NewSource(time.Now().UnixNano()))
-		//zipf, _ := NewYCSBZipfGenerator(random, 0, 1000000, s, false)
-		zipf := NewRejectionInversionGenerator(1000000, s)
+		random := rand.New(rand.NewSource(time.Now().UnixNano()))
+		zipf, _ := NewYCSBZipfGenerator(random, 0, 1000000, s, false)
+		//zipf := NewRejectionInversionGenerator(1000000, s)
 
 		hist := make(map[int]int)
 		total_accesses := 0
@@ -53,8 +56,8 @@ func main() {
 			for k := 0; k < 1; k++ {
 				ok := false
 				for !ok {
-					ok = set.Add(int(zipf.sample()))
-					//ok = set.Add(int(zipf.Uint64()))
+					//ok = set.Add(int(zipf.sample()))
+					ok = set.Add(int(zipf.Uint64Jenn(nil)))
 				}
 			}
 
